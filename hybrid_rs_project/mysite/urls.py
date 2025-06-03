@@ -19,6 +19,8 @@ from django.urls import path
 from django.urls import include, path
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('core/', include("core.urls")),
     path('ratingBased/', include("popularity_based.urls")),
-    path('contentBased/', include("content_based_filtering.urls"))
+    path('contentBased/', include("content_based_filtering.urls")),
+    path('collaborativeBased/', include("collaborative_filtering.urls"))
 ]

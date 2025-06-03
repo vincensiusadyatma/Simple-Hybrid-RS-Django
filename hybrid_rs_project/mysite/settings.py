@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     "core",
     "content_based_filtering",
+    "collaborative_filtering",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
