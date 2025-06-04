@@ -1,8 +1,8 @@
-# 🔍 Hybrid Recommendation System Schemes
+# Hybrid Recommendation System Schemes
 
 This project implements **three recommendation system schemes** tailored to the **user status** within the application. Each recommendation type adapts to the availability of user data, ensuring relevant and personalized suggestions.
 
-## ✅ Recommendation System Schemes Based on User Status
+## Recommendation System Schemes Based on User Status
 
 | User Status                          | Recommendation Method                    | Description                                                                 |
 |-------------------------------------|------------------------------------------|-----------------------------------------------------------------------------|
@@ -12,7 +12,7 @@ This project implements **three recommendation system schemes** tailored to the 
 
 ---
 
-## 📌 Key Concepts
+##  Key Concepts
 
 - **Demographic Filtering**: Simulates group-level preferences when individual data is not available.
 - **Content-Based Filtering**: Analyzes user’s profile and preferred attributes to recommend similar items.
@@ -21,11 +21,53 @@ This project implements **three recommendation system schemes** tailored to the 
 
 ---
 
-## 🛠 Technologies Used
+## Technologies Used
 
 - Language : Python
 - Database: SQL Lite
 - Framework: Django
+
+
+## How To Use
+
+1. **Kloning Repositori**
+   ```bash
+   
+   https://github.com/vincensiusadyatma/Simple-Hybrid-RS-Django.git
+   
+2. **Create Virtual ENV**
+   ```bash
+   python -m venv venv
+
+3. **Activate the virtual env (gitbash)**
+   ```bash
+   source venv/Scripts/activate
+   
+4. **Activate the virtual env (cmd)**
+   ```bash
+   venv/Scripts/activate.bat
+
+5. **Install the requirements**
+   ```bash
+   pip install -r requirements.txt
+
+5. **Change Directory Project**
+   ```bash
+   cd hybrid_rs_project
+
+5. **Database SQL Lite Migrations**
+   ```bash
+   python manage.py migrate
+
+5. **Run Seeder**
+   ```bash
+   python manage.py seed_all
+   
+5. **Run API**
+   ```bash
+   python manage.py runserver
+
+
 
 ---
 
