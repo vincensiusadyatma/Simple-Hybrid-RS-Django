@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "python3 manage.py migrate && python3 manage.py seed_all && python3 manage.py collectstatic --noinput",
+  "buildCommand": "cd hybrid_rs_project && python3 manage.py migrate && python3 manage.py seed_all && python3 manage.py collectstatic --noinput && python3 manage.py runserver",
   "routes": [
     {
       "src": "/static/(.*)",
