@@ -15,7 +15,7 @@
     }
   ],
   "buildCommand": "cd hybrid_rs_project && python manage.py migrate && python manage.py seed_all",
-  "startCommand": "gunicorn hybrid_rs_project.wsgi",
+
   "routes": [
     {
       "src": "/(.*)",
