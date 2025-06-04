@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "hybrid_rs_project/wsgi.py",
+      "use": "@vercel/python",
+      "config": {"maxLambdaSize": "15mb", "runtime": "python3.x"}
+    },
+    {
+      "src": "build_files.sh",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "staticfiles"
+      }
+    }
+  ],
+  "buildCommand": "cd hybrid_rs_project && python manage.py migrate && python manage.py seed_all",
+  "startCommand": "gunicorn hybrid_rs_project.wsgi",
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "hybrid_rs_project/wsgi.py"
+    },
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    }
+  ]
+}
