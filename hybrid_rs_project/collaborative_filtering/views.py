@@ -33,7 +33,7 @@ def user_based_collaborative_filtering_by_name(request):
     if user.id not in df['user_id'].unique():
         return JsonResponse({'message': f'User "{user_name}" belum memfavoritkan hotel apapun'}, status=404)
 
-    # Buat matriks user-hotel (binary: 1 jika favorit, 0 jika tidak)
+    # Buat matriks user-hotel ( 1 jika favorit, 0 jika tidak)
     user_hotel_matrix = df.pivot_table(index='user_id', columns='hotel_id', aggfunc=lambda x: 1, fill_value=0)
 
     # Hitung similarity antar user
