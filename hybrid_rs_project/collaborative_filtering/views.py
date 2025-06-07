@@ -9,7 +9,7 @@ from collaborative_filtering.models import Favorite
 def user_based_collaborative_filtering_by_name(request):
     # Ambil nama user dan jumlah rekomendasi dari query params
     user_name = request.GET.get('user_name')
-    top_n = int(request.GET.get('top_n', 3))  # ambil top 3 rekomendasi
+    top_n = int(request.GET.get('top_n', 3))  
 
     # Validasi input
     if not user_name:
@@ -29,7 +29,7 @@ def user_based_collaborative_filtering_by_name(request):
     if df.empty:
         return JsonResponse({'message': 'Data favorites kosong'}, status=404)
 
-    # Pastikan user memiliki data favorit
+    # CEK user memiliki data favorit
     if user.id not in df['user_id'].unique():
         return JsonResponse({'message': f'User "{user_name}" belum memfavoritkan hotel apapun'}, status=404)
 
@@ -154,10 +154,22 @@ def list_favorites_by_user(request):
 
     # Ambil data favorite hotel user
     favorites = Favorite.objects.filter(user=user).select_related('hotel')
-    hotel_list = [{'hotel_id': fav.hotel.id, 'hotel_name': fav.hotel.hotel_name} for fav in favorites]
+    hotel_list = []
+    for fav in favorites:
+        hotel = fav.hotel
+        hotel_data = {
+            'id': hotel.id,
+            'hotel_name': hotel.hotel_name,
+            'hotel_name_link': hotel.hotel_name_link,
+            'review_score': hotel.review_score,
+            'review_score_text': hotel.review_score_text,
+            'review_score_title': hotel.review_score_title,
+            'hotel_image': hotel.hotel_image,
+            'hotel_price': float(hotel.hotel_price),
+        }
+        hotel_list.append(hotel_data)
 
     return JsonResponse({
         'user': user.full_name,
         'favorites': hotel_list
     })
-
