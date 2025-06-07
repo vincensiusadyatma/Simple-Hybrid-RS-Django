@@ -3,13 +3,13 @@ from django.http import JsonResponse
 from sklearn.metrics.pairwise import cosine_similarity
 from core.models import Hotel, User
 from collaborative_filtering.models import Favorite
-
+from django.forms.models import model_to_dict
 
 #fungsi collaborative
 def user_based_collaborative_filtering_by_name(request):
     # Ambil nama user dan jumlah rekomendasi dari query params
     user_name = request.GET.get('user_name')
-    top_n = int(request.GET.get('top_n', 3))  
+    top_n = int(request.GET.get('top_n', 3))
 
     # Validasi input
     if not user_name:
@@ -29,11 +29,11 @@ def user_based_collaborative_filtering_by_name(request):
     if df.empty:
         return JsonResponse({'message': 'Data favorites kosong'}, status=404)
 
-    # CEK user memiliki data favorit
+    # Cek apakah user memiliki data favorit
     if user.id not in df['user_id'].unique():
         return JsonResponse({'message': f'User "{user_name}" belum memfavoritkan hotel apapun'}, status=404)
 
-    # Buat matriks user-hotel ( 1 jika favorit, 0 jika tidak)
+    # Buat matriks user-hotel (1 jika favorit, 0 jika tidak)
     user_hotel_matrix = df.pivot_table(index='user_id', columns='hotel_id', aggfunc=lambda x: 1, fill_value=0)
 
     # Hitung similarity antar user
@@ -67,12 +67,16 @@ def user_based_collaborative_filtering_by_name(request):
     # Ambil data hotel rekomendasi dari DB
     recommended_hotels = Hotel.objects.filter(id__in=recommended_hotel_ids)[:top_n]
 
-    # Format hasil ke bentuk JSON
-    recommendations = [{
-        'hotel_id': hotel.id,
-        'hotel_name': hotel.hotel_name
-    } for hotel in recommended_hotels]
+    # Format hasil ke bentuk JSON dengan semua property dari hotel
+    recommendations = []
+    for hotel in recommended_hotels:
+        hotel_data = model_to_dict(hotel)
+        # Jika hotel_image bukan ImageField, langsung pakai nilainya
+        if hasattr(hotel, 'hotel_image') and hotel.hotel_image:
+            hotel_data['hotel_image'] = hotel.hotel_image  # string biasa
+        recommendations.append(hotel_data)
 
+    # Return JSON response
     return JsonResponse({
         'user_name': user.full_name,
         'similar_users': [{
@@ -82,8 +86,6 @@ def user_based_collaborative_filtering_by_name(request):
         }],
         'recommendations': recommendations
     })
-
-
 
 #fungsi tambah favorite list user
 def add_favorite_by_get(request):
