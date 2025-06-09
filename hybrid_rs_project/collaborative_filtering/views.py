@@ -73,7 +73,7 @@ def user_based_collaborative_filtering_by_name(request):
         hotel_data = model_to_dict(hotel)
         # Jika hotel_image bukan ImageField, langsung pakai nilainya
         if hasattr(hotel, 'hotel_image') and hotel.hotel_image:
-            hotel_data['hotel_image'] = hotel.hotel_image  # string biasa
+            hotel_data['hotel_image'] = hotel.hotel_image  
         recommendations.append(hotel_data)
 
     # Return JSON response

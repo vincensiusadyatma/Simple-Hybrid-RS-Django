@@ -39,7 +39,7 @@ def content_based_by_name(request):
     df = pd.get_dummies(df, columns=['review_score_title'])
 
     # Fitur yang digunakan untuk similarity
-    features = ['review_score_text', 'hotel_price'] + [
+    features = ['review_score','review_score_text', 'hotel_price'] + [
         col for col in df.columns if col.startswith('review_score_title_')
     ]
 
