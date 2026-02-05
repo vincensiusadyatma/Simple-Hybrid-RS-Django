@@ -10,6 +10,7 @@ This project implements **three recommendation system schemes** tailored to the 
 | 🔹 2. Logged In (Only Personal Data) | Content-Based Filtering                  | Uses user's personal preferences such as budget range, preferred hotel types, and desired facilities. |
 | 🔹 3. Logged In (With History)       | Collaborative Filtering / Hybrid Filtering | Suggests options based on users with similar behaviors, ratings, or booking histories. Combines content and collaborative methods for improved accuracy. |
 
+
 ---
 
 ##  Key Concepts
